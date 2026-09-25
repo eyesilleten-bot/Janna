@@ -1,0 +1,14 @@
+﻿player is
+    name is "Ege"
+    level is 1
+    score is 100
+
+show player.name
+show player.level
+show player.score
+
+increase player.level by 1
+increase player.score by 50
+
+show player.level
+show player.score

@@ -1,0 +1,5 @@
+﻿task greet person
+    show "Hello {person}"
+
+greet "Ege"
+greet "Janna"

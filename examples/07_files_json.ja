@@ -1,0 +1,23 @@
+﻿use files
+use json
+
+files.write "note.txt" "Hello from Janna"
+
+text is files.read "note.txt"
+show text
+
+exists is files.exists "note.txt"
+
+when exists is yes
+    show "note.txt exists"
+
+player is
+    name is "Ege"
+    level is 7
+
+json.write "player.json" player
+
+loaded is json.read "player.json"
+
+show loaded.name
+show loaded.level

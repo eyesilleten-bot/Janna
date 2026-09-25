@@ -1,0 +1,17 @@
+﻿# Operating system
+Thumbs.db
+Desktop.ini
+
+# Editor files
+.vscode/
+.idea/
+
+# Temporary files
+*.tmp
+*.log
+*~
+
+# Future local release artifacts
+*.exe
+*.zip
+release/
