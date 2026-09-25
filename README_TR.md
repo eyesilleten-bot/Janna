@@ -4,7 +4,7 @@ Janna, programlamaya yeni ba?layanlar i?in okunabilir, sade ve pratik olacak ?ek
 
 ## G?ncel s?r?m
 
-0.1.1
+0.2.0
 
 ## Janna V2 neler yapabiliyor?
 

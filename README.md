@@ -4,7 +4,7 @@ Janna is a beginner-first programming language designed to be readable, simple, 
 
 ## Current version
 
-0.1.1
+0.2.0
 
 ## What Janna V2 can do
 
