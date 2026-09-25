@@ -1,61 +1,54 @@
-# Janna H?zl? Ba?lang??
+# Janna Hızlı Başlangıç
 
-## 1. Janna'y? kontrol et
+## 1. Janna'yı kontrol et
 
-Kurulumdan sonra yeni bir PowerShell penceresi a?:
+Kurulumdan sonra yeni bir PowerShell penceresi aç:
 
     janna version
 
-Mevcut komutlar? g?rmek i?in:
+Komutları gör:
 
     janna help
 
-## 2. Yeni proje olu?tur
-
-Yeni proje olu?tur:
+## 2. Yeni proje oluştur
 
     janna new hello_project
-
-Klas?re gir:
-
     cd hello_project
 
-Tipik bir proje yap?s?:
+Tipik proje yapısı:
 
     janna.toml
     src/
         app.ja
     tests/
 
-## 3. Projeyi ?al??t?r
+## 3. Projeyi kullan
 
-Projeyi ?al??t?r:
+Çalıştır:
 
     janna run
 
-?al??t?rmadan kontrol et:
+Kontrol et:
 
     janna check
 
-Testleri ?al??t?r:
+Testleri çalıştır:
 
     janna test
 
-Windows EXE olu?tur:
+Windows EXE oluştur:
 
     janna build
 
-## 4. Tek dosyal? programlar
+## 4. Tek dosyalı programlar
 
-Janna'y? proje olu?turmadan da kullanabilirsin.
-
-?rnek `hello.ja`:
+`hello.ja`:
 
     name is "Ege"
 
     show "Hello {name}"
 
-?al??t?r:
+Çalıştır:
 
     janna run hello.ja
 
@@ -63,18 +56,18 @@ Kontrol et:
 
     janna check hello.ja
 
-EXE olu?tur:
+Build:
 
     janna build hello.ja
 
-## 5. De?i?kenler
+## 5. Değişkenler
 
     name is "Ege"
     age is 25
     active is yes
     empty is nothing
 
-## 6. ??kt? ve kullan?c? girdisi
+## 6. Çıktı ve kullanıcı girdisi
 
     show "Hello"
     show name
@@ -83,7 +76,7 @@ EXE olu?tur:
     answer is ask "Your name: "
     show "Welcome {answer}"
 
-## 7. Ko?ullar
+## 7. Koşullar
 
     age is 25
 
@@ -92,7 +85,7 @@ EXE olu?tur:
     otherwise
         show "Under 18"
 
-## 8. D?ng?ler
+## 8. Döngüler
 
     repeat 3
         show "Hello"
@@ -103,14 +96,14 @@ EXE olu?tur:
         show number
         increase number by 1
 
-## 9. Task yap?s?
+## 9. Task yapısı
 
     task greet person
         show "Hello {person}"
 
     greet "Ege"
 
-Task'ler de?er d?nd?rebilir:
+Değer döndüren task:
 
     task add a b
         give a + b
@@ -118,7 +111,7 @@ Task'ler de?er d?nd?rebilir:
     result is add 10 20
     show result
 
-## 10. Listeler ve object yap?lar?
+## 10. Listeler ve object yapıları
 
     numbers is [10, 20, 30]
 
@@ -137,22 +130,20 @@ Object:
     show player.name
     increase player.score by 50
 
-## 11. Mod?ller
+## 11. Modüller
 
-`src/greeter.ja` olu?tur:
+`src/greeter.ja`:
 
     task greet name
         show "Hello {name}"
 
-`src/app.ja` i?inden kullan:
+`src/app.ja`:
 
     use greeter
 
     greeter.greet "Janna"
 
-## 12. Dosya ve JSON i?lemleri
-
-Dosyalar:
+## 12. Dosya ve JSON işlemleri
 
     use files
 
@@ -170,7 +161,6 @@ JSON:
         level is 7
 
     json.write "player.json" player
-
     loaded is json.read "player.json"
 
     show loaded.name
@@ -199,42 +189,38 @@ JSON:
         player is
             name is "Guest"
 
-    show player.name
-
 ## 15. Janna testleri
-
-?rnek:
 
     test "math works"
         expect 10 + 5 is 15
 
-Proje testleri genellikle ?urada bulunur:
+Testler genellikle:
 
     tests/
 
-?al??t?r:
+klasöründe bulunur.
+
+Çalıştır:
 
     janna test
 
-## 16. Klavye k?sayol syntax?
+## 16. Klavye kısayol syntaxı
 
-Janna V2 klavye k?sayol syntax?n? destekler.
-
-Do?al syntax:
+Doğal:
 
     name is "Janna"
 
     when name is "Janna"
         show "Hello"
 
-K?sayol syntax?:
+Kısayol:
 
     name = "Janna"
 
     if name == "Janna"
         show "Hello"
 
-Di?er baz? k?sayollar:
+Diğer bazı kısayollar:
 
     +=
     -=
@@ -246,55 +232,53 @@ Di?er baz? k?sayollar:
     ||
     !
 
-V2 i?inde do?al ve k?sayol syntax? birlikte kullan?labilir.
+## 17. Proje dosyası
 
-## 17. Proje dosyas?
-
-?rnek `janna.toml`:
+`janna.toml`:
 
     name = "my_project"
     entry = "src/app.ja"
 
-Proje dosyas? bulundu?unda ?u komutlar entry dosyas?n? otomatik kullan?r:
+Bundan sonra:
 
     janna run
     janna check
     janna test
     janna build
 
+komutları proje entry dosyasını otomatik kullanır.
+
 ## 18. Editor Alpha
 
-Windows release paketinde ?u dosya bulunur:
+Release paketindeki:
 
     editor/janna-language-0.1.0.vsix
 
-Bu VSIX dosyas?n? VS Code veya Cursor i?ine kurarak Janna dil deste?ini etkinle?tirebilirsin.
+dosyası VS Code veya Cursor'a kurulabilir.
 
-Editor syntax highlighting ve Janna run/check/test/build komutlar?n? sa?lar.
+## 19. Janna Frontier'ı çalıştır
 
-## 19. Janna Frontier
+GitHub'da **Releases > Janna 0.2.0** yolunu aç.
 
-Release paketinde b?y?k V2 ?rnek projesi bulunur:
+`JannaSetup.exe` indirip kurduktan sonra:
 
     examples/janna_frontier/
 
-Bu proje ?unlar? g?sterir:
+klasöründe PowerShell aç ve:
 
-- ?ok dosyal? mod?ller
-- proje yap?s?
-- test sistemi
-- dosya ve JSON kal?c?l???
-- random event sistemi
-- terminal girdisi
-- oyun state y?netimi
-- executable build
+    janna run
 
-Klas?re girip ?unlar? deneyebilirsin:
+yaz.
+
+Kontrol ve test:
 
     janna check
     janna test
-    janna run
 
-## 20. Yard?m
+ZIP kullanıyorsan Frontier klasöründen:
+
+    ../../janna.exe run
+
+## 20. Yardım
 
     janna help

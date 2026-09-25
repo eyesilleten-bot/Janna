@@ -6,6 +6,27 @@ Janna is a beginner-first programming language designed to be readable, simple, 
 
 0.2.0
 
+## Run Janna Frontier
+
+To try Janna Frontier from GitHub:
+
+1. Open the **Releases** section of this repository.
+2. Open **Janna 0.2.0**.
+3. Download and run `JannaSetup.exe`.
+4. Open the installed `examples/janna_frontier` folder.
+5. Open PowerShell in that folder and run:
+
+    janna run
+
+You can also check or test the project first:
+
+    janna check
+    janna test
+
+If you prefer the portable ZIP, download `Janna-0.2.0-Windows.zip`, extract it, open `examples/janna_frontier`, and run:
+
+    ../../janna.exe run
+
 ## What Janna V2 can do
 
 - variables, conditions, loops, lists, and objects

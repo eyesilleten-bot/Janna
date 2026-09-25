@@ -1,48 +1,69 @@
 # Janna
 
-Janna, programlamaya yeni ba?layanlar i?in okunabilir, sade ve pratik olacak ?ekilde tasarlanm?? bir programlama dilidir.
+Janna, programlamaya yeni başlayanlar için okunabilir, sade ve pratik olacak şekilde tasarlanmış bir programlama dilidir.
 
-## G?ncel s?r?m
+## Güncel sürüm
 
 0.2.0
 
+## Janna Frontier'ı çalıştırma
+
+GitHub repository'sinden Janna Frontier'ı denemek için:
+
+1. Repository'nin sağ tarafındaki **Releases** bölümüne gir.
+2. **Janna 0.2.0** release'ini aç.
+3. `JannaSetup.exe` dosyasını indir ve Janna'yı kur.
+4. Kurulum klasöründeki `examples/janna_frontier` klasörünü aç.
+5. Bu klasörde PowerShell aç ve şunu çalıştır:
+
+    janna run
+
+Önce kontrol veya test yapmak istersen:
+
+    janna check
+    janna test
+
+Kurulum yapmak istemiyorsan `Janna-0.2.0-Windows.zip` dosyasını indirip çıkarabilirsin.
+
+ZIP içindeki `examples/janna_frontier` klasöründe:
+
+    ../../janna.exe run
+
 ## Janna V2 neler yapabiliyor?
 
-- de?i?kenler, ko?ullar, d?ng?ler, listeler ve object yap?lar?
-- task yap?s? ve geri d?n?? de?erleri
-- kullan?c? mod?lleri ve ?ok dosyal? projeler
-- `janna.toml` tabanl? proje sistemi
-- dosya ve JSON i?lemleri
-- text, random ve time ara?lar?
-- terminalden kullan?c? girdisi
+- değişkenler, koşullar, döngüler, listeler ve object yapıları
+- task yapısı ve geri dönüş değerleri
+- kullanıcı modülleri ve çok dosyalı projeler
+- `janna.toml` tabanlı proje sistemi
+- dosya ve JSON işlemleri
+- text, random ve time araçları
+- terminalden kullanıcı girdisi
 - `attempt ... if fails` ile hata yakalama
 - Janna test sistemi
-- `janna check` ile proje kontrol?
-- klavye k?sayol syntax?
-- `.ja` dosyalar?n? ve projeleri Windows `.exe` dosyas?na d?n??t?rme
-- VS Code / Cursor i?in Janna Editor Alpha
+- `janna check` ile proje kontrolü
+- klavye kısayol syntaxı
+- `.ja` dosyalarını ve projeleri Windows `.exe` dosyasına dönüştürme
+- VS Code / Cursor için Janna Editor Alpha
 
 ## Kurulum
 
-?unu ?al??t?r:
+`JannaSetup.exe` dosyasını çalıştır.
 
-    JannaSetup.exe
-
-Kurulumdan sonra yeni bir PowerShell penceresi a? ve ?unu yaz:
+Kurulumdan sonra yeni bir PowerShell penceresi aç:
 
     janna version
 
-## Yeni proje olu?turma
+## Yeni proje oluşturma
 
-Yeni bir Janna projesi olu?tur:
+Yeni proje:
 
     janna new my_project
 
-Sonra proje klas?r?ne gir:
+Proje klasörüne gir:
 
     cd my_project
 
-Projeyi ?al??t?r:
+Projeyi çalıştır:
 
     janna run
 
@@ -50,35 +71,31 @@ Kontrol et:
 
     janna check
 
-Testleri ?al??t?r:
+Testleri çalıştır:
 
     janna test
 
-Windows EXE olu?tur:
+Windows EXE oluştur:
 
     janna build
 
-## ?lk Janna program?n
+## İlk Janna programın
 
-Tek bir `.ja` dosyas?yla da ?al??abilirsin.
-
-`hello.ja` olu?tur:
+`hello.ja`:
 
     name is "Ege"
 
     show "Hello {name}"
 
-?al??t?r:
+Çalıştır:
 
     janna run hello.ja
 
-EXE olu?tur:
+EXE oluştur:
 
     janna build hello.ja
 
-## Proje yap?s?
-
-Tipik bir Janna projesi ??yle g?r?n?r:
+## Proje yapısı
 
     my_project/
         janna.toml
@@ -86,74 +103,55 @@ Tipik bir Janna projesi ??yle g?r?n?r:
             app.ja
         tests/
 
-?rnek `janna.toml`:
+Örnek `janna.toml`:
 
     name = "my_project"
     entry = "src/app.ja"
 
-## Klavye k?sayol syntax?
+## Klavye kısayol syntaxı
 
-Janna V2 hem do?al ba?lang?? syntax?n? hem de klavye k?sayol syntax?n? destekler.
-
-Do?al syntax:
+Doğal syntax:
 
     name is "Janna"
 
     when name is "Janna"
         show "Hello"
 
-Klavye k?sayol syntax?:
+Kısayol syntaxı:
 
     name = "Janna"
 
     if name == "Janna"
         show "Hello"
 
-?ki kullan?m da Janna V2 i?inde ge?erlidir.
+Janna V2 iki syntax biçimini de destekler.
 
 ## Editor Alpha
 
-Release paketi Janna Editor Alpha VSIX dosyas?n? i?erir.
+Release paketi VS Code / Cursor için Janna Editor Alpha paketini içerir:
 
-Bu extension VS Code ve Cursor i?inde Janna syntax highlighting ve Janna komutlar? sa?lar.
+    editor/janna-language-0.1.0.vsix
 
-VSIX dosyas? ?urada bulunur:
+## Janna Frontier
 
-    editor/
+Büyük V2 demo projesi:
 
-## ?rnekler
+    examples/janna_frontier/
 
-`examples` klas?r?nde k???k ?rneklerin yan?nda b?y?k V2 demo projesi de bulunur:
+Frontier; çok dosyalı modüller, test sistemi, kayıt sistemi, JSON, random event'ler, terminal girdisi ve executable build gibi V2 özelliklerini kullanır.
 
-    01_hello.ja
-    02_conditions.ja
-    03_loops.ja
-    04_tasks.ja
-    05_lists.ja
-    06_objects.ja
-    07_files_json.ja
-    janna_frontier/
+## Syntax katmanları
 
-`janna_frontier`, Janna V2 proje ?zelliklerini g?stermek ve test etmek i?in geli?tirilmi? ?ok dosyal? terminal tabanl? bir koloni hayatta kalma oyunudur.
+1. doğal / canonical başlangıç syntaxı
+2. klavye kısayol syntaxı
+3. sembolik / uzaylı görünüm syntaxı
 
-## Syntax katmanlar?
+V2 ilk iki katmanı destekler.
 
-Janna i?in ?? syntax katman? planlanm??t?r:
-
-1. do?al / canonical ba?lang?? syntax?
-2. klavye k?sayol syntax?
-3. sembolik / uzayl? g?r?n?m syntax?
-
-V2 ilk iki katman? destekler.
-
-Sembolik/uzayl? katman? daha sonraki bir s?r?m i?in planlanm??t?r.
-
-## Daha fazla yard?m
-
-?unu kullan:
+## Daha fazla yardım
 
     janna help
 
-K?sa ba?lang?? rehberi i?in:
+Daha ayrıntılı başlangıç rehberi:
 
     QUICKSTART_TR.md
