@@ -1,0 +1,73 @@
+use colony
+use actions
+use events
+
+test "new colony starts alive"
+    colony.reset_state
+    expect colony.colony_is_alive
+
+test "victory threshold works"
+    winning_state is
+        day is 20
+        population is 8
+        food is 20
+        energy is 20
+        materials is 0
+        morale is 70
+
+    colony.load_state winning_state
+    expect colony.colony_has_won
+
+test "day nineteen is not victory"
+    losing_state is
+        day is 19
+        population is 8
+        food is 20
+        energy is 20
+        materials is 0
+        morale is 70
+
+    colony.load_state losing_state
+    expect not colony.colony_has_won
+
+test "zero food means colony fails"
+    failed_state is
+        day is 5
+        population is 6
+        food is 0
+        energy is 50
+        materials is 20
+        morale is 75
+
+    colony.load_state failed_state
+    expect not colony.colony_is_alive
+
+test "normalize clamps morale"
+    high_morale_state is
+        day is 2
+        population is 6
+        food is 50
+        energy is 50
+        materials is 20
+        morale is 140
+
+    colony.load_state high_morale_state
+    colony.normalize_state
+    expect colony.state.morale is 100
+
+test "failed repair does not spend materials"
+    repair_state is
+        day is 1
+        population is 6
+        food is 50
+        energy is 50
+        materials is 0
+        morale is 75
+
+    result is actions.repair_generators repair_state
+    expect result is no
+    expect repair_state.materials is 0
+
+test "history can reset"
+    events.reset_history
+    expect count of events.history_state.entries is 0

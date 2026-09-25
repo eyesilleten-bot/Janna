@@ -1,6 +1,0 @@
-﻿age is 25
-
-when age is at least 18
-    show "Adult"
-otherwise
-    show "Under 18"

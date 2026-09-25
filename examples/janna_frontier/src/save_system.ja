@@ -1,0 +1,23 @@
+use files
+use json
+
+save_path is "frontier_save.json"
+
+task save_game colony_state event_history
+    save_data is
+        colony is colony_state
+        history is event_history
+
+    json.write save_path save_data
+
+    show ""
+    show "Game saved."
+
+task has_save
+    give files.exists save_path
+
+task load_game
+    when not files.exists save_path
+        give nothing
+
+    give json.read save_path

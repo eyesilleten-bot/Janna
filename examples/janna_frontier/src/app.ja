@@ -1,0 +1,165 @@
+use ui
+use colony
+use actions
+use events
+use save_system
+
+ui.show_banner
+ui.show_main_menu
+
+choice is ask "Choose: "
+
+when choice is "1"
+    colony.reset_state
+    events.reset_history
+    save_system.save_game colony.state events.history_state
+
+    show ""
+    show "Colony established."
+
+    repeat forever
+        colony.show_status
+        ui.show_turn_menu
+
+        action is ask "Action: "
+
+        when action is "1"
+            action_happened is actions.gather_food colony.state
+
+            when action_happened
+                colony.advance_day
+                events.run_event colony.state
+                colony.normalize_state
+
+        otherwise when action is "2"
+            action_happened is actions.repair_generators colony.state
+
+            when action_happened
+                colony.advance_day
+                events.run_event colony.state
+                colony.normalize_state
+
+        otherwise when action is "3"
+            action_happened is actions.rest colony.state
+
+            when action_happened
+                colony.advance_day
+                events.run_event colony.state
+                colony.normalize_state
+
+        otherwise when action is "4"
+            action_happened is actions.explore colony.state
+
+            when action_happened
+                colony.advance_day
+                events.run_event colony.state
+                colony.normalize_state
+
+        otherwise when action is "5"
+            events.show_history
+            skip
+
+        otherwise when action is "6"
+            save_system.save_game colony.state events.history_state
+            show "Colony ended."
+            stop
+
+        otherwise
+            show "Unknown action."
+            skip
+
+        when colony.colony_has_won
+            show ""
+            show "The colony has survived the frontier."
+            show "Victory!"
+            save_system.save_game colony.state events.history_state
+            stop
+
+        when not colony.colony_is_alive
+            show ""
+            show "The colony has failed."
+            save_system.save_game colony.state events.history_state
+            stop
+
+otherwise when choice is "2"
+    when save_system.has_save
+        loaded_save is save_system.load_game
+        colony.load_state loaded_save.colony
+        events.load_history loaded_save.history
+
+        show ""
+        show "Saved colony loaded."
+
+        repeat forever
+            colony.show_status
+            ui.show_turn_menu
+
+            action is ask "Action: "
+
+            when action is "1"
+                action_happened is actions.gather_food colony.state
+
+                when action_happened
+                    colony.advance_day
+                    events.run_event colony.state
+                    colony.normalize_state
+
+            otherwise when action is "2"
+                action_happened is actions.repair_generators colony.state
+
+                when action_happened
+                    colony.advance_day
+                    events.run_event colony.state
+                    colony.normalize_state
+
+            otherwise when action is "3"
+                action_happened is actions.rest colony.state
+
+                when action_happened
+                    colony.advance_day
+                    events.run_event colony.state
+                    colony.normalize_state
+
+            otherwise when action is "4"
+                action_happened is actions.explore colony.state
+
+                when action_happened
+                    colony.advance_day
+                    events.run_event colony.state
+                    colony.normalize_state
+
+            otherwise when action is "5"
+                events.show_history
+                skip
+
+            otherwise when action is "6"
+                save_system.save_game colony.state events.history_state
+                show "Colony ended."
+                stop
+
+            otherwise
+                show "Unknown action."
+                skip
+
+            when colony.colony_has_won
+                show ""
+                show "The colony has survived the frontier."
+                show "Victory!"
+                save_system.save_game colony.state events.history_state
+                stop
+
+            when not colony.colony_is_alive
+                show ""
+                show "The colony has failed."
+                save_system.save_game colony.state events.history_state
+                stop
+
+    otherwise
+        show ""
+        show "No saved colony found."
+
+otherwise when choice is "3"
+    show "Goodbye."
+
+otherwise
+    show "Unknown choice."

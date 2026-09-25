@@ -1,0 +1,49 @@
+use random
+
+task gather_food state
+    increase state.food by 12
+    decrease state.energy by 2
+    show "Food gathered."
+    give yes
+
+task repair_generators state
+    when state.materials is below 4
+        show "Not enough materials."
+        give no
+
+    decrease state.materials by 4
+    increase state.energy by 10
+    show "Generators repaired."
+    give yes
+
+task rest state
+    increase state.morale by 6
+
+    when state.morale is above 100
+        state.morale is 100
+
+    show "The colony rests."
+    give yes
+
+
+task explore state
+    when state.energy is below 6
+        show "Not enough energy to explore."
+        give no
+
+    decrease state.energy by 6
+
+    roll is random.number 1 100
+
+    when roll is at most 40
+        show "Exploration found useful materials."
+        increase state.materials by 6
+
+    otherwise when roll is at most 75
+        show "Exploration found emergency food."
+        increase state.food by 8
+
+    otherwise
+        show "Exploration found nothing useful."
+
+    give yes

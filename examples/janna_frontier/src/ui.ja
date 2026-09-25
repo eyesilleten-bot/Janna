@@ -1,0 +1,21 @@
+task show_banner
+    show "================================"
+    show "        JANNA FRONTIER"
+    show "================================"
+
+task show_main_menu
+    show ""
+    show "1. New colony"
+    show "2. Continue colony"
+    show "3. Exit"
+
+
+task show_turn_menu
+    show ""
+    show "Choose an action:"
+    show "1. Gather food"
+    show "2. Repair generators"
+    show "3. Rest"
+    show "4. Explore"
+    show "5. View event history"
+    show "6. End colony"

@@ -1,110 +1,300 @@
-﻿# Janna Quick Start
+# Janna Quick Start
 
-## Variables
+## 1. Check Janna
 
-name is "Ege"
-age is 25
-active is yes
-empty is nothing
+After installation, open a new PowerShell window:
 
-## Output
+    janna version
 
-show "Hello"
-show name
-show "Hello {name}"
+Show available commands:
 
-## Conditions
+    janna help
 
-age is 25
+## 2. Create a project
 
-when age is at least 18
-    show "Adult"
-otherwise
-    show "Under 18"
+Create a new project:
 
-## Loops
+    janna new hello_project
 
-repeat 3
+Enter the folder:
+
+    cd hello_project
+
+A project normally contains:
+
+    janna.toml
+    src/
+        app.ja
+    tests/
+
+## 3. Run the project
+
+Run the current project:
+
+    janna run
+
+Check it without running:
+
+    janna check
+
+Run its tests:
+
+    janna test
+
+Build a Windows executable:
+
+    janna build
+
+## 4. Single-file programs
+
+You can also use Janna without a project.
+
+Example `hello.ja`:
+
+    name is "Ege"
+
+    show "Hello {name}"
+
+Run:
+
+    janna run hello.ja
+
+Check:
+
+    janna check hello.ja
+
+Build:
+
+    janna build hello.ja
+
+## 5. Variables
+
+    name is "Ege"
+    age is 25
+    active is yes
+    empty is nothing
+
+## 6. Output and input
+
     show "Hello"
+    show name
+    show "Hello {name}"
 
-number is 1
+    answer is ask "Your name: "
+    show "Welcome {answer}"
 
-while number is at most 3
-    show number
-    increase number by 1
+## 7. Conditions
 
-## Tasks
+    age is 25
 
-task greet person
-    show "Hello {person}"
+    when age is at least 18
+        show "Adult"
+    otherwise
+        show "Under 18"
 
-greet "Ege"
+## 8. Loops
 
-## Lists
+    repeat 3
+        show "Hello"
 
-numbers is [10, 20, 30]
+    number is 1
 
-show first of numbers
-show last of numbers
-show count of numbers
+    while number is at most 3
+        show number
+        increase number by 1
 
-add 40 to numbers
+## 9. Tasks
 
-## Objects
+    task greet person
+        show "Hello {person}"
 
-player is
-    name is "Ege"
-    score is 100
+    greet "Ege"
 
-show player.name
-increase player.score by 50
+Tasks can return values:
 
-## Files
+    task add a b
+        give a + b
 
-use files
+    result is add 10 20
+    show result
 
-files.write "note.txt" "Hello from Janna"
-text is files.read "note.txt"
-show text
+## 10. Lists and objects
 
-## JSON
+    numbers is [10, 20, 30]
 
-use json
+    show first of numbers
+    show last of numbers
+    show count of numbers
 
-player is
-    name is "Ege"
-    level is 7
+    add 40 to numbers
 
-json.write "player.json" player
-loaded is json.read "player.json"
+Objects:
 
-show loaded.name
-
-## Error handling
-
-use json
-
-attempt
-    player is json.read "missing.json"
-
-if fails
     player is
-        name is "Guest"
+        name is "Ege"
+        score is 100
 
-show player.name
+    show player.name
+    increase player.score by 50
 
-## Run a program
+## 11. Modules
 
-janna run app.ja
+Create `src/greeter.ja`:
 
-## Build an EXE
+    task greet name
+        show "Hello {name}"
 
-janna build app.ja
+Use it from `src/app.ja`:
 
-## Test
+    use greeter
 
-janna test
+    greeter.greet "Janna"
 
-## Version
+## 12. Files and JSON
 
-janna version
+Files:
+
+    use files
+
+    files.write "note.txt" "Hello from Janna"
+    content is files.read "note.txt"
+
+    show content
+
+JSON:
+
+    use json
+
+    player is
+        name is "Ege"
+        level is 7
+
+    json.write "player.json" player
+
+    loaded is json.read "player.json"
+
+    show loaded.name
+
+## 13. Text, random, and time
+
+    use text
+    use random
+    use time
+
+    show text.upper "janna"
+
+    number is random.number 1 10
+    show number
+
+    show time.now
+
+## 14. Error handling
+
+    use json
+
+    attempt
+        player is json.read "missing.json"
+
+    if fails
+        player is
+            name is "Guest"
+
+    show player.name
+
+## 15. Janna tests
+
+Example:
+
+    test "math works"
+        expect 10 + 5 is 15
+
+Project tests normally live inside:
+
+    tests/
+
+Run them with:
+
+    janna test
+
+## 16. Keyboard shorthand
+
+Janna V2 supports keyboard shorthand.
+
+Canonical:
+
+    name is "Janna"
+
+    when name is "Janna"
+        show "Hello"
+
+Shorthand:
+
+    name = "Janna"
+
+    if name == "Janna"
+        show "Hello"
+
+Other shorthand forms include:
+
+    +=
+    -=
+    == 
+    !=
+    >=
+    <=
+    &&
+    ||
+    !
+
+Canonical and shorthand syntax can both be used in V2.
+
+## 17. Project file
+
+Example `janna.toml`:
+
+    name = "my_project"
+    entry = "src/app.ja"
+
+With a project file, these commands use the configured entry automatically:
+
+    janna run
+    janna check
+    janna test
+    janna build
+
+## 18. Editor Alpha
+
+The Windows release includes:
+
+    editor/janna-language-0.1.0.vsix
+
+Install this VSIX in VS Code or Cursor to enable Janna language support.
+
+The editor provides syntax highlighting and Janna run/check/test/build commands.
+
+## 19. Janna Frontier
+
+The release includes the larger V2 example project:
+
+    examples/janna_frontier/
+
+It demonstrates:
+
+- multi-file modules
+- project structure
+- tests
+- file and JSON persistence
+- random events
+- terminal input
+- game state
+- executable builds
+
+Enter its folder and try:
+
+    janna check
+    janna test
+    janna run
+
+## 20. Help
+
+    janna help

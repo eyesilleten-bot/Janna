@@ -1,8 +1,0 @@
-﻿repeat 3
-    show "Janna is running"
-
-number is 1
-
-while number is at most 3
-    show number
-    increase number by 1

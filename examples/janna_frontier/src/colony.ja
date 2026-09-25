@@ -1,0 +1,100 @@
+state is
+    day is 1
+    population is 6
+    food is 50
+    energy is 50
+    materials is 20
+    morale is 75
+
+task load_state loaded
+    state.day is loaded.day
+    state.population is loaded.population
+    state.food is loaded.food
+    state.energy is loaded.energy
+    state.materials is loaded.materials
+    state.morale is loaded.morale
+
+task reset_state
+    state.day is 1
+    state.population is 6
+    state.food is 50
+    state.energy is 50
+    state.materials is 20
+    state.morale is 75
+
+task show_status
+    show ""
+    show "COLONY STATUS"
+    show "Day:"
+    show state.day
+    show "Population:"
+    show state.population
+    show "Food:"
+    show state.food
+    show "Energy:"
+    show state.energy
+    show "Materials:"
+    show state.materials
+    show "Morale:"
+    show state.morale
+
+task normalize_state
+    when state.food is below 0
+        state.food is 0
+
+    when state.energy is below 0
+        state.energy is 0
+
+    when state.materials is below 0
+        state.materials is 0
+
+    when state.population is below 0
+        state.population is 0
+
+    when state.morale is below 0
+        state.morale is 0
+
+    when state.morale is above 100
+        state.morale is 100
+
+task advance_day
+    increase state.day by 1
+    decrease state.food by 6
+    decrease state.energy by 4
+    increase state.morale by 1
+    normalize_state
+
+
+task colony_is_alive
+    when state.population is at most 0
+        give no
+
+    when state.food is at most 0
+        give no
+
+    when state.energy is at most 0
+        give no
+
+    when state.morale is at most 0
+        give no
+
+    give yes
+
+task colony_has_won
+    when state.day is below 20
+        give no
+
+    when state.population is below 8
+        give no
+
+    when state.morale is below 70
+        give no
+
+    when state.food is below 20
+        give no
+
+    when state.energy is below 20
+        give no
+
+    give yes
+

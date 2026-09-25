@@ -1,0 +1,85 @@
+use random
+
+history_state is
+    entries is []
+
+task record_event message
+    entries is history_state.entries
+    add message to entries
+
+task reset_history
+    history_state.entries is []
+
+task load_history loaded
+    history_state.entries is loaded.entries
+
+task show_history
+    show ""
+    show "EVENT HISTORY"
+
+    when count of history_state.entries is 0
+        show "No events recorded yet."
+
+    otherwise
+        each entry in history_state.entries
+            show entry
+
+task run_event state
+    roll is random.number 1 100
+
+    when roll is at most 30
+        give nothing
+
+    otherwise when roll is at most 40
+        show ""
+        show "EVENT: Supply cache discovered."
+        increase state.food by 10
+        increase state.materials by 4
+        record_event "Day {state.day}: Supply cache discovered."
+
+    otherwise when roll is at most 50
+        show ""
+        show "EVENT: Solar surge."
+        increase state.energy by 12
+        record_event "Day {state.day}: Solar surge."
+
+    otherwise when roll is at most 60
+        show ""
+        show "EVENT: Dust storm."
+        decrease state.energy by 6
+        decrease state.morale by 4
+        record_event "Day {state.day}: Dust storm."
+
+    otherwise when roll is at most 70
+        show ""
+        show "EVENT: New survivors arrive."
+        increase state.population by 1
+        increase state.morale by 5
+        record_event "Day {state.day}: New survivors arrive."
+
+    otherwise when roll is at most 78
+        show ""
+        show "EVENT: Equipment failure."
+        decrease state.materials by 5
+        decrease state.energy by 4
+        record_event "Day {state.day}: Equipment failure."
+
+    otherwise when roll is at most 86
+        show ""
+        show "EVENT: Hidden water reserves found."
+        increase state.food by 8
+        increase state.morale by 3
+        record_event "Day {state.day}: Hidden water reserves found."
+
+    otherwise when roll is at most 93
+        show ""
+        show "EVENT: Colony dispute."
+        decrease state.morale by 8
+        record_event "Day {state.day}: Colony dispute."
+
+    otherwise
+        show ""
+        show "EVENT: Abandoned generator recovered."
+        increase state.energy by 15
+        increase state.materials by 3
+        record_event "Day {state.day}: Abandoned generator recovered."

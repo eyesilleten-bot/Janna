@@ -1,110 +1,300 @@
-﻿# Janna Hızlı Başlangıç
+# Janna H?zl? Ba?lang??
 
-## Değişkenler
+## 1. Janna'y? kontrol et
 
-name is "Ege"
-age is 25
-active is yes
-empty is nothing
+Kurulumdan sonra yeni bir PowerShell penceresi a?:
 
-## Ekrana çıktı verme
+    janna version
 
-show "Hello"
-show name
-show "Hello {name}"
+Mevcut komutlar? g?rmek i?in:
 
-## Koşullar
+    janna help
 
-age is 25
+## 2. Yeni proje olu?tur
 
-when age is at least 18
-    show "Adult"
-otherwise
-    show "Under 18"
+Yeni proje olu?tur:
 
-## Döngüler
+    janna new hello_project
 
-repeat 3
+Klas?re gir:
+
+    cd hello_project
+
+Tipik bir proje yap?s?:
+
+    janna.toml
+    src/
+        app.ja
+    tests/
+
+## 3. Projeyi ?al??t?r
+
+Projeyi ?al??t?r:
+
+    janna run
+
+?al??t?rmadan kontrol et:
+
+    janna check
+
+Testleri ?al??t?r:
+
+    janna test
+
+Windows EXE olu?tur:
+
+    janna build
+
+## 4. Tek dosyal? programlar
+
+Janna'y? proje olu?turmadan da kullanabilirsin.
+
+?rnek `hello.ja`:
+
+    name is "Ege"
+
+    show "Hello {name}"
+
+?al??t?r:
+
+    janna run hello.ja
+
+Kontrol et:
+
+    janna check hello.ja
+
+EXE olu?tur:
+
+    janna build hello.ja
+
+## 5. De?i?kenler
+
+    name is "Ege"
+    age is 25
+    active is yes
+    empty is nothing
+
+## 6. ??kt? ve kullan?c? girdisi
+
     show "Hello"
+    show name
+    show "Hello {name}"
 
-number is 1
+    answer is ask "Your name: "
+    show "Welcome {answer}"
 
-while number is at most 3
-    show number
-    increase number by 1
+## 7. Ko?ullar
 
-## Task yapısı
+    age is 25
 
-task greet person
-    show "Hello {person}"
+    when age is at least 18
+        show "Adult"
+    otherwise
+        show "Under 18"
 
-greet "Ege"
+## 8. D?ng?ler
 
-## Listeler
+    repeat 3
+        show "Hello"
 
-numbers is [10, 20, 30]
+    number is 1
 
-show first of numbers
-show last of numbers
-show count of numbers
+    while number is at most 3
+        show number
+        increase number by 1
 
-add 40 to numbers
+## 9. Task yap?s?
 
-## Object yapısı
+    task greet person
+        show "Hello {person}"
 
-player is
-    name is "Ege"
-    score is 100
+    greet "Ege"
 
-show player.name
-increase player.score by 50
+Task'ler de?er d?nd?rebilir:
 
-## Dosyalar
+    task add a b
+        give a + b
 
-use files
+    result is add 10 20
+    show result
 
-files.write "note.txt" "Hello from Janna"
-text is files.read "note.txt"
-show text
+## 10. Listeler ve object yap?lar?
 
-## JSON
+    numbers is [10, 20, 30]
 
-use json
+    show first of numbers
+    show last of numbers
+    show count of numbers
 
-player is
-    name is "Ege"
-    level is 7
+    add 40 to numbers
 
-json.write "player.json" player
-loaded is json.read "player.json"
+Object:
 
-show loaded.name
-
-## Hata yakalama
-
-use json
-
-attempt
-    player is json.read "missing.json"
-
-if fails
     player is
-        name is "Guest"
+        name is "Ege"
+        score is 100
 
-show player.name
+    show player.name
+    increase player.score by 50
 
-## Program çalıştırma
+## 11. Mod?ller
 
-janna run app.ja
+`src/greeter.ja` olu?tur:
 
-## EXE oluşturma
+    task greet name
+        show "Hello {name}"
 
-janna build app.ja
+`src/app.ja` i?inden kullan:
 
-## Test
+    use greeter
 
-janna test
+    greeter.greet "Janna"
 
-## Sürüm kontrolü
+## 12. Dosya ve JSON i?lemleri
 
-janna version
+Dosyalar:
+
+    use files
+
+    files.write "note.txt" "Hello from Janna"
+    content is files.read "note.txt"
+
+    show content
+
+JSON:
+
+    use json
+
+    player is
+        name is "Ege"
+        level is 7
+
+    json.write "player.json" player
+
+    loaded is json.read "player.json"
+
+    show loaded.name
+
+## 13. Text, random ve time
+
+    use text
+    use random
+    use time
+
+    show text.upper "janna"
+
+    number is random.number 1 10
+    show number
+
+    show time.now
+
+## 14. Hata yakalama
+
+    use json
+
+    attempt
+        player is json.read "missing.json"
+
+    if fails
+        player is
+            name is "Guest"
+
+    show player.name
+
+## 15. Janna testleri
+
+?rnek:
+
+    test "math works"
+        expect 10 + 5 is 15
+
+Proje testleri genellikle ?urada bulunur:
+
+    tests/
+
+?al??t?r:
+
+    janna test
+
+## 16. Klavye k?sayol syntax?
+
+Janna V2 klavye k?sayol syntax?n? destekler.
+
+Do?al syntax:
+
+    name is "Janna"
+
+    when name is "Janna"
+        show "Hello"
+
+K?sayol syntax?:
+
+    name = "Janna"
+
+    if name == "Janna"
+        show "Hello"
+
+Di?er baz? k?sayollar:
+
+    +=
+    -=
+    ==
+    !=
+    >=
+    <=
+    &&
+    ||
+    !
+
+V2 i?inde do?al ve k?sayol syntax? birlikte kullan?labilir.
+
+## 17. Proje dosyas?
+
+?rnek `janna.toml`:
+
+    name = "my_project"
+    entry = "src/app.ja"
+
+Proje dosyas? bulundu?unda ?u komutlar entry dosyas?n? otomatik kullan?r:
+
+    janna run
+    janna check
+    janna test
+    janna build
+
+## 18. Editor Alpha
+
+Windows release paketinde ?u dosya bulunur:
+
+    editor/janna-language-0.1.0.vsix
+
+Bu VSIX dosyas?n? VS Code veya Cursor i?ine kurarak Janna dil deste?ini etkinle?tirebilirsin.
+
+Editor syntax highlighting ve Janna run/check/test/build komutlar?n? sa?lar.
+
+## 19. Janna Frontier
+
+Release paketinde b?y?k V2 ?rnek projesi bulunur:
+
+    examples/janna_frontier/
+
+Bu proje ?unlar? g?sterir:
+
+- ?ok dosyal? mod?ller
+- proje yap?s?
+- test sistemi
+- dosya ve JSON kal?c?l???
+- random event sistemi
+- terminal girdisi
+- oyun state y?netimi
+- executable build
+
+Klas?re girip ?unlar? deneyebilirsin:
+
+    janna check
+    janna test
+    janna run
+
+## 20. Yard?m
+
+    janna help

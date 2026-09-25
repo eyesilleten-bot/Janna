@@ -1,17 +1,26 @@
-﻿# Operating system
-Thumbs.db
-Desktop.ini
+﻿# Janna implementation source - never publish
+*.py
+*.pyc
+*.pyo
+*.js
+*.ts
+*.spec
+*.iss
+*.ps1
+*.cmd
+*.bat
 
-# Editor files
-.vscode/
-.idea/
-
-# Temporary files
-*.tmp
-*.log
-*~
-
-# Future local release artifacts
+# Compiled / packaged artifacts are GitHub Release assets, not repo files
 *.exe
+*.dll
 *.zip
-release/
+*.vsix
+
+# Janna source files are private by default
+*.ja
+*.janna
+*.toml
+
+# Only Janna Frontier source is allowed publicly
+!examples/janna_frontier/
+!examples/janna_frontier/**
