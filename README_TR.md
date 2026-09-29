@@ -1,101 +1,74 @@
-# Janna
+﻿# Janna
 
-Janna, programlamaya yeni başlayanlar için okunabilir, sade ve pratik olacak şekilde tasarlanmış bir programlama dilidir.
+Janna; okunabilir, doğrudan ve pratik olmayı hedefleyen, aynı zamanda gerçek çok dosyalı uygulamaları, build süreçlerini, runtime servislerini, AI iş akışlarını ve Windows dağıtımını destekleyen beginner-first bir programlama dilidir.
 
 ## Güncel sürüm
 
-0.2.0
+`0.3.0`
 
-## Janna Frontier'ı çalıştırma
+Janna V3 şu anda final release kapanış aşamasındadır. Final public release `0.3.0` sürümünü kullanacaktır.
 
-GitHub repository'sinden Janna Frontier'ı denemek için:
+## Janna V3 neler içeriyor?
 
-1. Repository'nin sağ tarafındaki **Releases** bölümüne gir.
-2. **Janna 0.2.0** release'ini aç.
-3. `JannaSetup.exe` dosyasını indir ve Janna'yı kur.
-4. Kurulum klasöründeki `examples/janna_frontier` klasörünü aç.
-5. Bu klasörde PowerShell aç ve şunu çalıştır:
-
-    janna run
-
-Önce kontrol veya test yapmak istersen:
-
-    janna check
-    janna test
-
-Kurulum yapmak istemiyorsan `Janna-0.2.0-Windows.zip` dosyasını indirip çıkarabilirsin.
-
-ZIP içindeki `examples/janna_frontier` klasöründe:
-
-    ../../janna.exe run
-
-## Janna V2 neler yapabiliyor?
-
+- okunabilir canonical Janna syntaxı
+- keyboard shorthand syntaxı
+- AlienJanna sembolik rendering katmanı
 - değişkenler, koşullar, döngüler, listeler ve object yapıları
-- task yapısı ve geri dönüş değerleri
-- kullanıcı modülleri ve çok dosyalı projeler
-- `janna.toml` tabanlı proje sistemi
-- dosya ve JSON işlemleri
-- text, random ve time araçları
-- terminalden kullanıcı girdisi
-- `attempt ... if fails` ile hata yakalama
-- Janna test sistemi
-- `janna check` ile proje kontrolü
-- klavye kısayol syntaxı
-- `.ja` dosyalarını ve projeleri Windows `.exe` dosyasına dönüştürme
-- VS Code / Cursor için Janna Editor Alpha
+- task'lar, return değerleri, user module'ler ve çok dosyalı projeler
+- built-in test sistemi ve source checking
+- `janna.toml` proje manifestleri
+- Windows executable build
+- files, paths, JSON, text, random ve time araçları
+- Markdown ve DOCX document output
+- terminal input ve runtime program arguments
+- runtime version, capability, application path ve exit-code bilgileri
+- HTTP istekleri
+- schema validation
+- resumable jobs ve checkpoints
+- environment variables ve secret-safe handling
+- AI generation, structured output, retry/repair davranışı ve usage bilgileri
+- büyük metinler için context splitting ve context building
+- source location ile task/module trace içeren diagnostics
+- VS Code ve Cursor için Janna Editor Beta
+- portable SDK ve Windows installer
+- kısa Windows launcher: `ja`
 
 ## Kurulum
 
 `JannaSetup.exe` dosyasını çalıştır.
 
-Kurulumdan sonra yeni bir PowerShell penceresi aç:
+Ardından yeni bir PowerShell penceresi açıp kurulumu doğrula:
 
     janna version
 
+CLI yardımını göster:
+
+    janna help
+
 ## Yeni proje oluşturma
 
-Yeni proje:
+Yeni bir Janna projesi oluştur:
 
     janna new my_project
-
-Proje klasörüne gir:
-
     cd my_project
 
 Projeyi çalıştır:
 
     janna run
 
-Kontrol et:
+Çalıştırmadan kontrol et:
 
     janna check
 
-Testleri çalıştır:
+Proje testlerini çalıştır:
 
     janna test
 
-Windows EXE oluştur:
+Windows executable oluştur:
 
     janna build
 
-## İlk Janna programın
-
-`hello.ja`:
-
-    name is "Ege"
-
-    show "Hello {name}"
-
-Çalıştır:
-
-    janna run hello.ja
-
-EXE oluştur:
-
-    janna build hello.ja
-
-## Proje yapısı
+Normal bir proje şu yapıyla başlar:
 
     my_project/
         janna.toml
@@ -108,50 +81,139 @@ EXE oluştur:
     name = "my_project"
     entry = "src/app.ja"
 
-## Klavye kısayol syntaxı
+## Tek dosya çalıştırma
 
-Doğal syntax:
+`hello.ja` oluştur:
+
+    name is "Ege"
+    show "Hello {name}"
+
+Çalıştır:
+
+    janna run hello.ja
+
+Ya da kısa Windows launcher'ını kullan:
+
+    ja hello.ja
+
+Program argümanları iki kullanımda da aktarılır:
+
+    janna run hello.ja first second
+    ja hello.ja first second
+
+`runtime` modülünü kullanan program bu değerleri `runtime.arguments` üzerinden okuyabilir.
+
+## Syntax katmanları
+
+Janna V3 üç syntax katmanına sahiptir.
+
+### Canonical syntax
 
     name is "Janna"
 
     when name is "Janna"
         show "Hello"
 
-Kısayol syntaxı:
+### Keyboard shorthand
 
-    name = "Janna"
+    name := "Janna"
 
-    if name == "Janna"
-        show "Hello"
+    ? name == "Janna"
+        -> "Hello"
 
-Janna V2 iki syntax biçimini de destekler.
+Keyboard shorthand çalıştırılabilir Janna source syntaxıdır. Normal parsing öncesinde normalize edilir ve canonical Janna ile aynı temel semantiği kullanır.
 
-## Editor Alpha
+### AlienJanna
 
-Release paketi VS Code / Cursor için Janna Editor Alpha paketini içerir:
+AlienJanna deterministik bir sembolik rendering katmanıdır. Canonical/keyboard Janna kodunu orijinal source'u değiştirmeden alternatif bir görsel biçimde render eder.
 
-    editor/janna-language-0.1.0.vsix
+AlienJanna ayrı bir parser modu veya source dilinin yerine geçen başka bir syntax değildir.
+
+## Standard library
+
+Built-in modüller:
+
+`files`, `json`, `text`, `random`, `time`, `env`, `secrets`, `http`, `ai`, `schema`, `jobs`, `context` ve `runtime`.
+
+Kompakt action listesi için:
+
+- `STDLIB_REFERENCE.md`
+- `STDLIB_REFERENCE_TR.md`
+
+## CLI reference
+
+Kompakt komut referansı için:
+
+- `CLI_REFERENCE.md`
+- `CLI_REFERENCE_TR.md`
+
+Ana komutlar:
+
+    janna new <project_name>
+    janna run [file.ja] [args...]
+    janna check [file.ja]
+    janna test [file.ja]
+    janna build [file.ja]
+    janna version
+    janna help
+
+Windows ayrıca şunu içerir:
+
+    ja <file.ja> [args...]
+
+Bu, `janna run` için kısa launcher'dır.
+
+## Editor Beta
+
+Janna Editor Beta, VS Code ve Cursor için Janna language support sağlar.
+
+Güncel extension package sürümü `0.2.0`'dır.
+
+Syntax highlighting ile birlikte active-file ve project seviyesinde şu komutları sağlar:
+
+- Run
+- Check
+- Test
+- Build
+
+Release paketi VSIX dosyasını `editor/` klasörü altında içerir.
 
 ## Janna Frontier
 
-Büyük V2 demo projesi:
+`examples/janna_frontier/`, Janna'yı daha büyük bir uygulamada göstermek için kullanılan public örnek projedir.
 
-    examples/janna_frontier/
+Kurulumdan sonra proje klasöründe:
 
-Frontier; çok dosyalı modüller, test sistemi, kayıt sistemi, JSON, random event'ler, terminal girdisi ve executable build gibi V2 özelliklerini kullanır.
+    janna run
 
-## Syntax katmanları
+çalıştır.
 
-1. doğal / canonical başlangıç syntaxı
-2. klavye kısayol syntaxı
-3. sembolik / uzaylı görünüm syntaxı
+Ayrıca:
 
-V2 ilk iki katmanı destekler.
+    janna check
+    janna test
+    janna build
+
+komutlarını kullanabilirsin.
+
+## Dokümantasyon
+
+Başlangıç noktaları:
+
+- `QUICKSTART.md` — hızlı İngilizce başlangıç
+- `QUICKSTART_TR.md` — hızlı Türkçe başlangıç
+- `HANDBOOK.md` — tam İngilizce handbook dizini
+- `HANDBOOK_TR.md` — tam Türkçe handbook dizini
+- `JANNA_HANDBOOK_EN.md` — birleştirilmiş İngilizce handbook
+- `JANNA_HANDBOOK_TR.md` — birleştirilmiş Türkçe handbook
+- `CLI_REFERENCE.md` / `CLI_REFERENCE_TR.md`
+- `STDLIB_REFERENCE.md` / `STDLIB_REFERENCE_TR.md`
+
+Handbook yaşayan dokümantasyon olarak tutulur: gelecekteki Janna sürümleri mevcut feature-family bölümlerini genişletir; gerçekten yeni subsystem'ler için yeni numaralı bölümler eklenebilir.
 
 ## Daha fazla yardım
 
     janna help
 
-Daha ayrıntılı başlangıç rehberi:
 
-    QUICKSTART_TR.md
+

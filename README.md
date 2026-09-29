@@ -1,77 +1,68 @@
-# Janna
+﻿# Janna
 
-Janna is a beginner-first programming language designed to be readable, simple, and practical.
+Janna is a beginner-first programming language designed to be readable, direct, and practical while still supporting real multi-file applications, builds, runtime services, AI workflows, and Windows distribution.
 
-## Current version
+## Current release
 
-0.2.0
+`0.3.0`
 
-## Run Janna Frontier
+Janna V3 is in final release-closure work. The final public release will use the `0.3.0` release version.
 
-To try Janna Frontier from GitHub:
+## What Janna V3 includes
 
-1. Open the **Releases** section of this repository.
-2. Open **Janna 0.2.0**.
-3. Download and run `JannaSetup.exe`.
-4. Open the installed `examples/janna_frontier` folder.
-5. Open PowerShell in that folder and run:
-
-    janna run
-
-You can also check or test the project first:
-
-    janna check
-    janna test
-
-If you prefer the portable ZIP, download `Janna-0.2.0-Windows.zip`, extract it, open `examples/janna_frontier`, and run:
-
-    ../../janna.exe run
-
-## What Janna V2 can do
-
-- variables, conditions, loops, lists, and objects
-- tasks and return values
-- user modules and multi-file projects
-- project files with `janna.toml`
-- files and JSON
-- text, random, and time utilities
-- terminal input
-- error handling with `attempt ... if fails`
-- built-in Janna tests
-- project checking with `janna check`
+- readable canonical Janna syntax
 - keyboard shorthand syntax
-- build `.ja` programs and projects into Windows `.exe` files
-- Janna Editor Alpha for VS Code / Cursor
+- AlienJanna symbolic rendering layer
+- variables, conditions, loops, lists, and objects
+- tasks, return values, user modules, and multi-file projects
+- built-in tests and source checking
+- `janna.toml` project manifests
+- Windows executable builds
+- files, paths, JSON, text, random, and time utilities
+- Markdown and DOCX document output
+- terminal input and runtime program arguments
+- runtime version, capability, application-path, and exit-code information
+- HTTP requests
+- schema validation
+- resumable jobs and checkpoints
+- environment variables and secret-safe handling
+- AI generation, structured output, retry/repair behavior, and usage information
+- context splitting and context building for large text
+- diagnostics with source locations and task/module traces
+- Janna Editor Beta for VS Code and Cursor
+- portable SDK and Windows installer
+- short Windows launcher: `ja`
 
-## Installation
+## Install
 
 Run:
 
     JannaSetup.exe
 
-After installation, open a new PowerShell window and run:
+Then open a new PowerShell window and verify the installation:
 
     janna version
+
+Show the CLI help:
+
+    janna help
 
 ## Create a project
 
 Create a new Janna project:
 
     janna new my_project
-
-Then enter the project folder:
-
     cd my_project
 
-Run the project:
+Run it:
 
     janna run
 
-Check it:
+Check it without running:
 
     janna check
 
-Run tests:
+Run project tests:
 
     janna test
 
@@ -79,27 +70,7 @@ Build a Windows executable:
 
     janna build
 
-## Your first Janna program
-
-You can also work with a single `.ja` file.
-
-Create `hello.ja`:
-
-    name is "Ege"
-
-    show "Hello {name}"
-
-Run it:
-
-    janna run hello.ja
-
-Build it:
-
-    janna build hello.ja
-
-## Project structure
-
-A Janna project normally looks like this:
+A normal project begins with:
 
     my_project/
         janna.toml
@@ -112,69 +83,134 @@ Example `janna.toml`:
     name = "my_project"
     entry = "src/app.ja"
 
-## Keyboard shorthand
+## Run a single file
 
-Janna V2 supports both canonical beginner syntax and keyboard shorthand.
+Create `hello.ja`:
 
-Canonical:
+    name is "Ege"
+    show "Hello {name}"
+
+Run it:
+
+    janna run hello.ja
+
+Or use the short Windows launcher:
+
+    ja hello.ja
+
+Program arguments are forwarded by both forms:
+
+    janna run hello.ja first second
+    ja hello.ja first second
+
+A program using the runtime module can read those values through `runtime.arguments`.
+
+## Syntax layers
+
+Janna V3 has three syntax layers.
+
+### Canonical syntax
 
     name is "Janna"
 
     when name is "Janna"
         show "Hello"
 
-Keyboard shorthand:
+### Keyboard shorthand
 
-    name = "Janna"
+    name := "Janna"
 
-    if name == "Janna"
-        show "Hello"
+    ? name == "Janna"
+        -> "Hello"
 
-Both forms are valid Janna V2.
+Keyboard shorthand is executable source syntax. It is normalized before normal parsing and shares the same underlying semantics as canonical Janna.
 
-## Editor Alpha
+### AlienJanna
 
-The release includes the Janna Editor Alpha VSIX package.
+AlienJanna is a deterministic symbolic rendering layer. It renders canonical/keyboard Janna into an alternate visual form without mutating the original source.
 
-It provides Janna language support for VS Code and Cursor, including syntax highlighting and Janna commands.
+AlienJanna is not a separate parser mode or a replacement source language.
 
-The VSIX file is inside:
+## Standard library
 
-    editor/
+Built-in modules include:
 
-## Examples
+`files`, `json`, `text`, `random`, `time`, `env`, `secrets`, `http`, `ai`, `schema`, `jobs`, `context`, and `runtime`.
 
-The `examples` folder contains small examples and the larger V2 demo project:
+For the compact action list, see:
 
-    01_hello.ja
-    02_conditions.ja
-    03_loops.ja
-    04_tasks.ja
-    05_lists.ja
-    06_objects.ja
-    07_files_json.ja
-    janna_frontier/
+- `STDLIB_REFERENCE.md`
+- `STDLIB_REFERENCE_TR.md`
 
-`janna_frontier` is a multi-file terminal colony survival game used to demonstrate and test Janna V2 project features.
+## CLI reference
 
-## Syntax layers
+For the compact command reference, see:
 
-Janna has three planned syntax layers:
+- `CLI_REFERENCE.md`
+- `CLI_REFERENCE_TR.md`
 
-1. natural/canonical beginner syntax
-2. keyboard shorthand
-3. symbolic/alien display syntax
+The main commands are:
 
-V2 supports the first two layers.
+    janna new <project_name>
+    janna run [file.ja] [args...]
+    janna check [file.ja]
+    janna test [file.ja]
+    janna build [file.ja]
+    janna version
+    janna help
 
-The symbolic/alien layer is planned for a later version.
+Windows also includes:
+
+    ja <file.ja> [args...]
+
+which is a short launcher for `janna run`.
+
+## Editor Beta
+
+Janna Editor Beta provides Janna language support for VS Code and Cursor.
+
+The current extension package version is `0.2.0`.
+
+It provides syntax highlighting plus active-file and project commands for:
+
+- Run
+- Check
+- Test
+- Build
+
+The release package contains the VSIX under the `editor/` directory.
+
+## Janna Frontier
+
+`examples/janna_frontier/` is the public example project used to demonstrate Janna in a larger application.
+
+After installation, open that project directory and run:
+
+    janna run
+
+You can also run:
+
+    janna check
+    janna test
+    janna build
+
+## Documentation
+
+Start here:
+
+- `QUICKSTART.md` — fast English walkthrough
+- `QUICKSTART_TR.md` — hızlı Türkçe başlangıç
+- `HANDBOOK.md` — complete English handbook index
+- `HANDBOOK_TR.md` — tam Türkçe handbook dizini
+- `JANNA_HANDBOOK_EN.md` — combined English handbook
+- `JANNA_HANDBOOK_TR.md` — birleştirilmiş Türkçe handbook
+- `CLI_REFERENCE.md` / `CLI_REFERENCE_TR.md`
+- `STDLIB_REFERENCE.md` / `STDLIB_REFERENCE_TR.md`
+
+The Handbook is maintained as living documentation: future Janna versions extend the existing feature-family chapters, while genuinely new subsystems can add new numbered chapters.
 
 ## More help
 
-Use:
-
     janna help
 
-For a compact walkthrough, see:
 
-    QUICKSTART.md

@@ -1,82 +1,60 @@
-# Janna Hızlı Başlangıç
+﻿# Janna Hızlı Başlangıç
 
-## 1. Janna'yı kontrol et
+Bu rehber Janna V3 ile hızlıca çalışan bir program oluşturmak içindir. Dilin ve runtime'ın tam dokümantasyonu için `HANDBOOK_TR.md` dosyasına bak.
 
-Kurulumdan sonra yeni bir PowerShell penceresi aç:
+## 1. Kurulumu kontrol et
+
+Yeni bir PowerShell penceresi aç:
 
     janna version
-
-Komutları gör:
-
     janna help
 
-## 2. Yeni proje oluştur
+## 2. Proje oluştur ve çalıştır
 
     janna new hello_project
     cd hello_project
-
-Tipik proje yapısı:
-
-    janna.toml
-    src/
-        app.ja
-    tests/
-
-## 3. Projeyi kullan
-
-Çalıştır:
-
     janna run
 
-Kontrol et:
+Yeni proje şu yapıyı kullanır:
+
+    hello_project/
+        janna.toml
+        src/
+            app.ja
+        tests/
+
+Kontrol, test ve build:
 
     janna check
-
-Testleri çalıştır:
-
     janna test
-
-Windows EXE oluştur:
-
     janna build
 
-## 4. Tek dosyalı programlar
+## 3. Tek dosya çalıştır
 
-`hello.ja`:
+`hello.ja` oluştur:
 
     name is "Ege"
-
     show "Hello {name}"
 
 Çalıştır:
 
     janna run hello.ja
 
-Kontrol et:
+Windows'ta kısa launcher'ı da kullanabilirsin:
 
-    janna check hello.ja
+    ja hello.ja
 
-Build:
-
-    janna build hello.ja
-
-## 5. Değişkenler
+## 4. Değerler ve input
 
     name is "Ege"
     age is 25
     active is yes
     empty is nothing
 
-## 6. Çıktı ve kullanıcı girdisi
+    answer is ask "Adın: "
+    show "Merhaba {answer}"
 
-    show "Hello"
-    show name
-    show "Hello {name}"
-
-    answer is ask "Your name: "
-    show "Welcome {answer}"
-
-## 7. Koşullar
+## 5. Koşullar ve döngüler
 
     age is 25
 
@@ -84,8 +62,6 @@ Build:
         show "Adult"
     otherwise
         show "Under 18"
-
-## 8. Döngüler
 
     repeat 3
         show "Hello"
@@ -96,14 +72,14 @@ Build:
         show number
         increase number by 1
 
-## 9. Task yapısı
+## 6. Task'lar
 
     task greet person
         show "Hello {person}"
 
     greet "Ege"
 
-Değer döndüren task:
+Task bir değer döndürebilir:
 
     task add a b
         give a + b
@@ -111,17 +87,11 @@ Değer döndüren task:
     result is add 10 20
     show result
 
-## 10. Listeler ve object yapıları
+## 7. Listeler ve object'ler
 
     numbers is [10, 20, 30]
-
     show first of numbers
-    show last of numbers
-    show count of numbers
-
     add 40 to numbers
-
-Object:
 
     player is
         name is "Ege"
@@ -130,55 +100,58 @@ Object:
     show player.name
     increase player.score by 50
 
-## 11. Modüller
+## 8. Modüller
 
-`src/greeter.ja`:
+`src/greeter.ja` oluştur:
 
     task greet name
         show "Hello {name}"
 
-`src/app.ja`:
+`src/app.ja` içinden kullan:
 
     use greeter
-
     greeter.greet "Janna"
 
-## 12. Dosya ve JSON işlemleri
+## 9. Built-in servisler
+
+Janna V3 built-in modülleri:
+
+    files
+    json
+    text
+    random
+    time
+    env
+    secrets
+    http
+    ai
+    schema
+    jobs
+    context
+    runtime
+
+Örnek:
 
     use files
 
     files.write "note.txt" "Hello from Janna"
     content is files.read "note.txt"
-
     show content
 
-JSON:
+Tüm action ve property'ler için `STDLIB_REFERENCE_TR.md` dosyasına bak.
 
-    use json
+## 10. Program argümanları
 
-    player is
-        name is "Ege"
-        level is 7
+Çalıştır:
 
-    json.write "player.json" player
-    loaded is json.read "player.json"
+    ja hello.ja first second
 
-    show loaded.name
+Sonra argümanları oku:
 
-## 13. Text, random ve time
+    use runtime
+    show runtime.arguments
 
-    use text
-    use random
-    use time
-
-    show text.upper "janna"
-
-    number is random.number 1 10
-    show number
-
-    show time.now
-
-## 14. Hata yakalama
+## 11. Hata yakalama
 
     use json
 
@@ -189,96 +162,46 @@ JSON:
         player is
             name is "Guest"
 
-## 15. Janna testleri
+    show player.name
+
+## 12. Janna testleri
 
     test "math works"
         expect 10 + 5 is 15
 
-Testler genellikle:
-
-    tests/
-
-klasöründe bulunur.
+Proje testleri normalde `tests/` klasöründe bulunur.
 
 Çalıştır:
 
     janna test
 
-## 16. Klavye kısayol syntaxı
+## 13. Keyboard shorthand
 
-Doğal:
+Canonical:
 
     name is "Janna"
+    show name
 
-    when name is "Janna"
-        show "Hello"
+Keyboard shorthand:
 
-Kısayol:
+    name := "Janna"
+    -> name
 
-    name = "Janna"
+Shorthand çalıştırılabilir source syntaxıdır ve normal parsing öncesinde normalize edilir.
 
-    if name == "Janna"
-        show "Hello"
+AlienJanna ayrı bir sembolik rendering katmanıdır; başka bir parser modu değildir. Syntax katmanlarının tam açıklaması için `HANDBOOK_TR.md` dosyasına bak.
 
-Diğer bazı kısayollar:
+## 14. Editor Beta
 
-    +=
-    -=
-    ==
-    !=
-    >=
-    <=
-    &&
-    ||
-    !
+Release paketi VS Code ve Cursor için Janna Editor Beta içerir. Extension package sürümü `0.2.0`'dır.
 
-## 17. Proje dosyası
+Syntax highlighting ile hem active file hem de project için Run / Check / Test / Build komutları sağlar.
 
-`janna.toml`:
+## 15. Sonraki referanslar
 
-    name = "my_project"
-    entry = "src/app.ja"
+- `HANDBOOK_TR.md` — tam handbook
+- `CLI_REFERENCE_TR.md` — CLI özeti
+- `STDLIB_REFERENCE_TR.md` — standard library özeti
+- `examples/` — çalıştırılabilir örnekler
+- `examples/janna_frontier/` — daha büyük proje örneği
 
-Bundan sonra:
-
-    janna run
-    janna check
-    janna test
-    janna build
-
-komutları proje entry dosyasını otomatik kullanır.
-
-## 18. Editor Alpha
-
-Release paketindeki:
-
-    editor/janna-language-0.1.0.vsix
-
-dosyası VS Code veya Cursor'a kurulabilir.
-
-## 19. Janna Frontier'ı çalıştır
-
-GitHub'da **Releases > Janna 0.2.0** yolunu aç.
-
-`JannaSetup.exe` indirip kurduktan sonra:
-
-    examples/janna_frontier/
-
-klasöründe PowerShell aç ve:
-
-    janna run
-
-yaz.
-
-Kontrol ve test:
-
-    janna check
-    janna test
-
-ZIP kullanıyorsan Frontier klasöründen:
-
-    ../../janna.exe run
-
-## 20. Yardım
-
-    janna help
